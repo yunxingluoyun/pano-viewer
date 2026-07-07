@@ -1,0 +1,7 @@
+<RCC>
+  <qresource prefix="/shaders">
+    <file alias="shaders/pano.vert.qsb">G:/pano-viewer/build/.qsb/shaders/pano.vert.qsb</file>
+    <file alias="shaders/pano.frag.qsb">G:/pano-viewer/build/.qsb/shaders/pano.frag.qsb</file>
+  </qresource>
+</RCC>
+
