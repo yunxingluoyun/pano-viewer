@@ -103,7 +103,7 @@ enum{
     + (isfp?0x01000000:0) + (pack?0x02000000:0))
 #define kdecode(k,bpc,cpp,isfp,pack,align) \
     bpc=k&0xFF, cpp=(k>>8)&0xFF, align=(k>>16)&0xFF, \
-    isfp=(k&0x01000000!=0, pack=(k&0x02000000!=0
+    isfp=((k&0x01000000)!=0), pack=((k&0x02000000)!=0)
 
 /**  default border and fill colors for empty frames  **/
 static QColor defborders[6] = {
@@ -461,22 +461,22 @@ QString pvQtPic::FaceName( PicFace face )
 {
     switch( face ) {
     case any:
-        return tr("any");
+        return QObject::tr("any");
     case front:
-        return tr("front");
+        return QObject::tr("front");
     case right:
-        return tr("right");
+        return QObject::tr("right");
     case back:
-        return tr("back");
+        return QObject::tr("back");
     case left:
-        return tr("left");
+        return QObject::tr("left");
     case top:
-        return tr("top");
+        return QObject::tr("top");
     case bottom:
-        return tr("bottom");
+        return QObject::tr("bottom");
     }
 
-    return tr("no such face");
+    return QObject::tr("no such face");
 }
 
 /*
