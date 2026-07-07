@@ -30,3 +30,42 @@
 *.exe
 *.out
 *.app
+
+# CMake/Ninja build trees
+build/
+cmake-build-*/
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+build.ninja
+.ninja_deps
+.ninja_log
+
+# Qt generated files
+*_autogen/
+.qt/
+.qsb/
+.lupdate/
+*.qrc.depends
+*.qmltypes
+
+# Debug/build artifacts
+*.ilk
+*.pdb
+*.idb
+*.manifest
+*.res
+*.exp
+*.qm
+
+# IDE/user-local files
+.vs/
+.vscode/
+*.user
+*.suo
+*.VC.db
+*.VC.opendb
+
+# OS noise
+Thumbs.db
+.DS_Store
