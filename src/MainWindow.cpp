@@ -18,9 +18,14 @@
 */
 
 #include <QtGui>
+#include <QActionGroup>
+#include <QApplication>
 #include <QErrorMessage>
+#include <QLocale>
+#include <QMenu>
 #include <QSettings>
 #include <QMessageBox>
+#include <QTranslator>
 #include "MainWindow.h"
 #include "GLwindow.h"
 #include "CubeLimit_dialog.h"
@@ -75,6 +80,10 @@ MainWindow::MainWindow( QWidget * parent)
     //install modal error message handler
     qInstallMessageHandler( errMsgHandler );
 
+    pqs = new QSettings("PanoPerspective", "Pano-1.0.0");
+    appTranslator = new QTranslator(this);
+    setApplicationLanguage( pqs->value("ui/language", systemLanguageCode()).toString(), false );
+
     //create actions that aren't in menus
     //toggle panosurface type
     QAction * ats = new QAction(this);
@@ -101,10 +110,10 @@ MainWindow::MainWindow( QWidget * parent)
 #endif // QT_NO_TOOLTIP
 
     setupUi( this );
+    createLanguageMenu();
 
 
     // load & apply persistent window settings
-    pqs = new QSettings("PanoPerspective", "Pano-1.0.0");
     resize( pqs->value("window/size", QSize(400, 400) ).toSize() );
     move( pqs->value("window/posn", QPoint(0, 0) ).toPoint() );
 //    showMaximized();
@@ -173,6 +182,93 @@ MainWindow::MainWindow( QWidget * parent)
     // enable panosurface switch
     actionPanosphere->setEnabled(true);
     actionPanocylinder->setEnabled(true);
+    retranslateDynamicUi();
+}
+
+QString MainWindow::systemLanguageCode() const
+{
+    const QStringList uiLanguages = QLocale::system().uiLanguages();
+    for( const QString & locale : uiLanguages ) {
+        const QLocale qlocale(locale);
+        if( qlocale.language() == QLocale::Chinese ) {
+            return "zh_CN";
+        }
+    }
+    return "en";
+}
+
+void MainWindow::setApplicationLanguage( const QString & code, bool save )
+{
+    const QString normalizedCode = code == "zh_CN" ? "zh_CN" : "en";
+
+    qApp->removeTranslator(appTranslator);
+    if( normalizedCode == "zh_CN" && appTranslator->load(":/i18n/PanoViewer_zh_CN") ) {
+        qApp->installTranslator(appTranslator);
+        languageCode = normalizedCode;
+    } else {
+        languageCode = "en";
+    }
+
+    if( save && pqs ) {
+        pqs->setValue("ui/language", languageCode);
+        pqs->sync();
+    }
+}
+
+void MainWindow::createLanguageMenu()
+{
+    menuLanguage = new QMenu(this);
+    languageActionGroup = new QActionGroup(this);
+    languageActionGroup->setExclusive(true);
+
+    actionLanguageEnglish = new QAction(this);
+    actionLanguageEnglish->setObjectName(QString::fromUtf8("actionLanguageEnglish"));
+    actionLanguageEnglish->setCheckable(true);
+    actionLanguageEnglish->setData("en");
+    languageActionGroup->addAction(actionLanguageEnglish);
+    menuLanguage->addAction(actionLanguageEnglish);
+
+    actionLanguageChinese = new QAction(this);
+    actionLanguageChinese->setObjectName(QString::fromUtf8("actionLanguageChinese"));
+    actionLanguageChinese->setCheckable(true);
+    actionLanguageChinese->setData("zh_CN");
+    languageActionGroup->addAction(actionLanguageChinese);
+    menuLanguage->addAction(actionLanguageChinese);
+
+    menubar->insertMenu(menuHelp->menuAction(), menuLanguage);
+
+    connect(languageActionGroup, &QActionGroup::triggered,
+            this, &MainWindow::switchLanguage);
+}
+
+void MainWindow::retranslateDynamicUi()
+{
+    if( menuLanguage ) {
+        menuLanguage->setTitle(tr("Language"));
+    }
+    if( actionLanguageEnglish ) {
+        actionLanguageEnglish->setText(tr("English"));
+        actionLanguageEnglish->setChecked(languageCode == "en");
+    }
+    if( actionLanguageChinese ) {
+        actionLanguageChinese->setText(tr("Chinese"));
+        actionLanguageChinese->setChecked(languageCode == "zh_CN");
+    }
+
+#ifndef QT_NO_TOOLTIP
+    actionToggleSurface->setToolTip(QApplication::translate("MainWindow",
+                                            "Switch panosurface: sphere gives stereographic views; cylinder gives Pannini views",
+                                            0));
+    actionNext_iProj->setToolTip(QApplication::translate("MainWindow",
+                                                         "Change assumed source image projection",
+                                                         0));
+#endif // QT_NO_TOOLTIP
+
+    showSurface(actionToggleSurface->isChecked() ? 0 : 1);
+    if( pmm ) {
+        pmm->retranslateText();
+    }
+    statusBar()->showMessage(tr("Ready"));
 }
 
 /*
@@ -443,4 +539,24 @@ void MainWindow::on_actionEye_up_triggered(){
 
 void MainWindow::on_actionEye_down_triggered(){
     emit step_eyey( -1 );
+}
+
+void MainWindow::switchLanguage()
+{
+    QAction * action = qobject_cast<QAction *>(sender());
+    if( !action ) {
+        action = languageActionGroup->checkedAction();
+    }
+    if( !action ) {
+        return;
+    }
+
+    const QString code = action->data().toString();
+    if( code == languageCode ) {
+        return;
+    }
+
+    setApplicationLanguage(code, true);
+    retranslateUi(this);
+    retranslateDynamicUi();
 }

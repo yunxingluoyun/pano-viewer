@@ -35,6 +35,8 @@ class QActionGroup;
 class QErrorMessage;
 class QSettings;
 class CubeLimit_dialog;
+class QMenu;
+class QTranslator;
 #include "pvQtMouseModes.h"
 
 class MainWindow :
@@ -92,10 +94,21 @@ private:
   // actions not created with Qt Designer
     QAction * actionToggleSurface;
     QAction * actionNext_iProj;
+    QAction * actionLanguageEnglish;
+    QAction * actionLanguageChinese;
+    QActionGroup * languageActionGroup;
+    QMenu * menuLanguage;
+    QTranslator * appTranslator;
+    QString languageCode;
   // persistent settings
     QSettings * pqs;
   // Mac cube limit dialog
     CubeLimit_dialog * pcld;
+
+    void createLanguageMenu();
+    void setApplicationLanguage( const QString & code, bool save );
+    QString systemLanguageCode() const;
+    void retranslateDynamicUi();
 
 private slots:
     void verify(int i);
@@ -150,6 +163,7 @@ private slots:
     void on_actionEye_left_triggered();
     void on_actionEye_up_triggered();
     void on_actionEye_down_triggered();
+    void switchLanguage();
 };
 
 #endif //ndef MAINWINDOW_H

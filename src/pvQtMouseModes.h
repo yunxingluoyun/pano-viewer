@@ -28,20 +28,24 @@ public:
     pvQtMouseModes( QWidget * parent = 0 )
     : QDialog(parent) {
         setupUi( this );
-        setWindowTitle("Mouse Modes");
-        plainTextEdit->setPlainText( QString( "\
-  Key	Buttons	Horizontal	Vertical\n\
-          left	  Yaw	  Pitch\n\
-          right	  EyeZ	  Zoom\n\
-          both	  Roll	  Pitch\n\
-  Shift	  left	  FrameX	  FrameY\n\
-  Shift	  right	  EyeX	  EyeY\n\
-  Shift	  both	  hFov	  vFov\n\
-  \n\
-  Hold Control key for horizontal-only\n\
-  Hold Alt key for vertical-only\n\
-  \n\
-  Scroll wheel: Zoom "));
+        retranslateText();
+    }
+
+    void retranslateText(){
+        setWindowTitle(tr("Mouse Modes"));
+        plainTextEdit->setPlainText( tr(
+"  Key\tButtons\tHorizontal\tVertical\n"
+"          left\t  Yaw\t  Pitch\n"
+"          right\t  EyeZ\t  Zoom\n"
+"          both\t  Roll\t  Pitch\n"
+"  Shift\t  left\t  FrameX\t  FrameY\n"
+"  Shift\t  right\t  EyeX\t  EyeY\n"
+"  Shift\t  both\t  hFov\t  vFov\n"
+"  \n"
+"  Hold Control key for horizontal-only\n"
+"  Hold Alt key for vertical-only\n"
+"  \n"
+"  Scroll wheel: Zoom ") );
     }
 protected:
     void resizeEvent( QResizeEvent * ev ){

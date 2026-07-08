@@ -134,7 +134,7 @@ Qt 版本</translation>
     <message>
         <location filename="ui/mainwindow.ui" line="91"/>
         <location filename="ui/mainwindow.ui" line="475"/>
-        <location filename="src/MainWindow.cpp" line="392"/>
+        <location filename="src/MainWindow.cpp" line="488"/>
         <source>panocylinder</source>
         <translation>全景柱面</translation>
     </message>
@@ -475,8 +475,8 @@ Qt 版本</translation>
     </message>
     <message>
         <location filename="ui/mainwindow.ui" line="461"/>
-        <location filename="src/MainWindow.cpp" line="85"/>
-        <location filename="src/MainWindow.cpp" line="392"/>
+        <location filename="src/MainWindow.cpp" line="94"/>
+        <location filename="src/MainWindow.cpp" line="488"/>
         <source>panosphere</source>
         <translation>全景球面</translation>
     </message>
@@ -631,19 +631,37 @@ Qt 版本</translation>
         <translation>Alt+Down</translation>
     </message>
     <message>
-        <location filename="src/MainWindow.cpp" line="88"/>
+        <location filename="src/MainWindow.cpp" line="97"/>
+        <location filename="src/MainWindow.cpp" line="259"/>
         <source>Switch panosurface: sphere gives stereographic views; cylinder gives Pannini views</source>
         <translation>切换全景表面：球面用于立体投影视图，柱面用于 Panini 视图</translation>
     </message>
     <message>
-        <location filename="src/MainWindow.cpp" line="98"/>
+        <location filename="src/MainWindow.cpp" line="107"/>
+        <location filename="src/MainWindow.cpp" line="262"/>
         <source>Change assumed source image projection</source>
         <translation>切换源图像的假定投影方式</translation>
     </message>
     <message>
-        <location filename="src/MainWindow.cpp" line="150"/>
+        <location filename="src/MainWindow.cpp" line="159"/>
+        <location filename="src/MainWindow.cpp" line="271"/>
         <source>Ready</source>
         <translation>就绪</translation>
+    </message>
+    <message>
+        <location filename="src/MainWindow.cpp" line="247"/>
+        <source>Language</source>
+        <translation>语言</translation>
+    </message>
+    <message>
+        <location filename="src/MainWindow.cpp" line="250"/>
+        <source>English</source>
+        <translation>英文</translation>
+    </message>
+    <message>
+        <location filename="src/MainWindow.cpp" line="254"/>
+        <source>Chinese</source>
+        <translation>中文</translation>
     </message>
 </context>
 <context>
@@ -833,6 +851,41 @@ Qt 版本</translation>
         <location filename="src/pictureTypes.cpp" line="120"/>
         <source>ERROR: nonexistent picture type</source>
         <translation>错误：图像类型不存在</translation>
+    </message>
+</context>
+<context>
+    <name>pvQtMouseModes</name>
+    <message>
+        <location filename="src/pvQtMouseModes.h" line="35"/>
+        <source>Mouse Modes</source>
+        <translation>鼠标模式</translation>
+    </message>
+    <message>
+        <location filename="src/pvQtMouseModes.h" line="36"/>
+        <source>  Key	Buttons	Horizontal	Vertical
+          left	  Yaw	  Pitch
+          right	  EyeZ	  Zoom
+          both	  Roll	  Pitch
+  Shift	  left	  FrameX	  FrameY
+  Shift	  right	  EyeX	  EyeY
+  Shift	  both	  hFov	  vFov
+  
+  Hold Control key for horizontal-only
+  Hold Alt key for vertical-only
+  
+  Scroll wheel: Zoom </source>
+        <translation>  按键	按钮	水平	垂直
+          左键	  偏航	  俯仰
+          右键	  视点Z	  缩放
+          双键	  滚转	  俯仰
+  Shift	  左键	  画面X	  画面Y
+  Shift	  右键	  视点X	  视点Y
+  Shift	  双键	  水平视场	  垂直视场
+  
+  按住 Control 键仅水平移动
+  按住 Alt 键仅垂直移动
+  
+  鼠标滚轮：缩放 </translation>
     </message>
 </context>
 <context>
